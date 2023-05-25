@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: routing-service-deployment
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 10%
+      maxUnavailable: 10%
+  selector:
+    matchLabels:
+      app: routing-service-deployment-label
+  template:
+    metadata:
+      labels:
+        app: routing-service-deployment-label
+    spec:
+      containers:
+        - name: routing-service
+          image: routing-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
